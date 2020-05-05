@@ -1,0 +1,22 @@
+{
+  "name": "plex-transcoder",
+  "version": "0.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeff-winn/PlexTranscoder.git"
+  },
+  "author": "Jeff Winn",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeff-winn/PlexTranscoder/issues"
+  },
+  "homepage": "https://github.com/jeff-winn/PlexTranscoder#readme",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
+}
