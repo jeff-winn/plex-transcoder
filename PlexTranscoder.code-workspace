@@ -6,8 +6,8 @@
 	],
 	"settings": {
 		"files.exclude": {
-			"build/": true,
-			"node_modules/": true,
+			"build": true,
+			"node_modules": true,
 			"**/.git": true,
 			"**/.svn": true,
 			"**/.hg": true,
