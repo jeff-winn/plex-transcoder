@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/main.js",
   "scripts": {
-    "tsc": "tsc"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",

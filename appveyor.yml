@@ -6,4 +6,4 @@ install:
     - cmd: npm install
 
 build_script:
-    - cmd: npm run tsc
+    - cmd: npm run build
