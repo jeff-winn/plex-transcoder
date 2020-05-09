@@ -3,7 +3,7 @@ environment:
 
 install:
     - ps: Install-Product node $env:nodejs_version
-    - npm install
+    - cmd: npm install
 
-build:
-    - npm run tsc
+build_script:
+    - cmd: npm run tsc
