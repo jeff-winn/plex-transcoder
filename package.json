@@ -4,7 +4,8 @@
   "description": "",
   "main": "build/main.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "build-prod": "tsc -p tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
