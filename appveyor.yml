@@ -6,4 +6,4 @@ install:
     - cmd: npm install
 
 build_script:
-    - cmd: npm run build
+    - cmd: npm run build-prod
