@@ -7,3 +7,6 @@ install:
     
 build_script:
     - npm run build-prod
+
+test_script:
+    - npm run test
