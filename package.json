@@ -2,10 +2,10 @@
   "name": "plex-transcoder",
   "version": "0.0.0",
   "description": "",
-  "main": "build/main.js",
+  "main": "./build/main.js",
   "scripts": {
     "build": "tsc",
-    "build-prod": "tsc -p tsconfig.prod.json"
+    "build-prod": "tsc -p ./tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
