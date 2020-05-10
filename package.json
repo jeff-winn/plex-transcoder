@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "build-prod": "tsc -p ./tsconfig.prod.json",
-    "test": "jest"
+    "test": "jest --collect-coverage"
   },
   "repository": {
     "type": "git",
