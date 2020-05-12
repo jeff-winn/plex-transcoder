@@ -2,6 +2,6 @@ FROM node:12.16.3
 
 WORKDIR /app
 
-COPY build/*.* /bin/
+COPY build/ .
 
-CMD [ "node" ]
+CMD [ "node", "main.js" ]
