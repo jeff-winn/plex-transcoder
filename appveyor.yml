@@ -1,9 +1,13 @@
-environment:
-    nodejs_version: "12.16.3"
+version: 1.0.{build}
+image: Ubuntu
+
+stack: node 12.16.3, docker
 
 install:
-    - ps: Install-Product node $env:nodejs_version
-    - cmd: npm install
-
+    - npm install
+    
 build_script:
-    - cmd: npm run tsc
+    - npm run build-prod
+
+test_script:
+    - npm run test
