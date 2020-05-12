@@ -1,3 +1,4 @@
+version: 1.0.{build}
 image: Ubuntu
 
 stack: node 12.16.3, docker
@@ -10,3 +11,6 @@ build_script:
 
 test_script:
     - npm run test
+
+before_deploy:
+    - docker build -t jeffwinn/plex-transcoder:$APPVEYOR_BUILD_NUMBER
