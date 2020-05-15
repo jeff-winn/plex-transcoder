@@ -24,6 +24,6 @@ test_script:
     - npm run test
 
 deploy_script:
-    - securefile -decrypt token.txt.enc -secret $DOCKER_HUB_TOKEN_SECRET -salt $DOCKER_HUB_TOKEN_SALT
+    - ps: securefile -decrypt token.txt.enc -secret $DOCKER_HUB_TOKEN_SECRET -salt $DOCKER_HUB_TOKEN_SALT
     - cat token.txt | docker login --username=$DOCKER_HUB_ACCT --password-stdin
     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
