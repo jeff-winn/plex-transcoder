@@ -1,5 +1,20 @@
-version: 1.0.{build}-preview
+version: 0.0.0-ci-{build}
 image: Ubuntu
+deploy: off
+
+for:
+-
+    branches:
+        only:
+            - master
+
+    deploy: on
+-
+    branches:
+        only:
+            - develop    
+            
+    deploy: on
 
 environment:
     DOCKER_HUB_ACCT: jeffwinn
@@ -20,7 +35,7 @@ test_script:
 
 before_deploy:
     - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
-    
+
 deploy_script:
     - docker login --username=$DOCKER_HUB_ACCT --password=$DOCKER_HUB_TOKEN
     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
