@@ -1,6 +1,11 @@
 version: 0.0.0-ci-{build}
 image: Ubuntu
 
+branches:
+    only:
+        - master
+        - develop
+        
 environment:
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
@@ -17,8 +22,6 @@ build_script:
 
 test_script:
     - npm run test
-
-deploy: off
 
 before_deploy:
     - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
