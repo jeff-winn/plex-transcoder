@@ -1,20 +1,5 @@
 version: 0.0.0-ci-{build}
 image: Ubuntu
-deploy: off
-
-for:
--
-    branches:
-        only:
-            - master
-
-    deploy: on
--
-    branches:
-        only:
-            - develop    
-            
-    deploy: on
 
 environment:
     DOCKER_HUB_ACCT: jeffwinn
@@ -32,6 +17,8 @@ build_script:
 
 test_script:
     - npm run test
+
+deploy: off
 
 before_deploy:
     - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
