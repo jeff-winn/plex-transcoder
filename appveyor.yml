@@ -1,19 +1,26 @@
 version: 1.0.{build}-preview
 image: Ubuntu
+
 environment:
     DOCKER_HUB_ACCT: jeffwinn
-    DOCKER_HUB_PROJECT: plex-transcoder
-
+    DOCKER_HUB_REPO: plex-transcoder
+    DOCKER_HUB_TOKEN:
+        secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
+    
 stack: node 12.16.3, docker
 
 install:
     - npm install
-    
+    - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
+    - ps: set-alias securefile ".\appveyor-tools\secure-file.exe"
+
 build_script:
     - npm run build-prod
+    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
 
 test_script:
     - npm run test
 
 deploy_script:
-    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_PROJECT:$APPVEYOR_BUILD_VERSION .
+    - docker login --username=$DOCKER_HUB_ACCT --password=$DOCKER_HUB_TOKEN
+    - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
