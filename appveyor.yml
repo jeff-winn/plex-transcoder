@@ -17,13 +17,13 @@ install:
     - ps: set-alias securefile ".\appveyor-tools\secure-file.exe"
 
 build_script:
-    - npm run build-prod
-    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
+    - npm run build-prod    
 
 test_script:
     - npm run test
 
 deploy_script:
-    - ps: securefile -decrypt token.txt.enc -secret $DOCKER_HUB_TOKEN_SECRET -salt $DOCKER_HUB_TOKEN_SALT
-    - cat token.txt | docker login --username=$DOCKER_HUB_ACCT --password-stdin
+    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
+    - ps: securefile -decrypt ./token.txt.enc -secret $DOCKER_HUB_TOKEN_SECRET -salt $DOCKER_HUB_TOKEN_SALT
+    - cat ./token.txt | docker login --username=$DOCKER_HUB_ACCT --password-stdin
     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
