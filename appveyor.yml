@@ -11,8 +11,6 @@ stack: node 12.16.3, docker
 
 install:
     - npm install
-    - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
-    - ps: set-alias securefile ".\appveyor-tools\secure-file.exe"
 
 build_script:
     - npm run build-prod
