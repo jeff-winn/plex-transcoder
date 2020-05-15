@@ -1,5 +1,8 @@
-version: 1.0.{build}
+version: 1.0.{build}-preview
 image: Ubuntu
+environment:
+    DOCKER_HUB_ACCT: jeffwinn
+    DOCKER_HUB_PROJECT: plex-transcoder
 
 stack: node 12.16.3, docker
 
@@ -11,3 +14,6 @@ build_script:
 
 test_script:
     - npm run test
+
+deploy_script:
+    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_PROJECT:$APPVEYOR_BUILD_VERSION .
