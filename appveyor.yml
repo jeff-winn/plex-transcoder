@@ -4,9 +4,9 @@ image: Ubuntu
 environment:
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
-    DOCKER_HUB_PASSPHRASE_SECRET:
+    DOCKER_HUB_TOKEN_SECRET:
         secure: 6YdG6et+/fBK/Y9cFwbjDkkLgAeu2yZjpyFCpQ8eT40XQ3DAqk/ju0FHyRgBa1FB0yG+e9cUzN7yxgMMsA56KA==
-    DOCKER_HUB_PASSPHRASE_SALT:
+    DOCKER_HUB_TOKEN_SALT:
         secure: A3VcoM1m3EoQ6jzU/U3Bt9jXGJZ/pJra06qx82nI4fI/E9f7vYrt759i2TGK1l/FDdusG1PqsRoKljOHj8T2BQ==
     
 stack: node 12.16.3, docker
@@ -24,6 +24,6 @@ test_script:
     - npm run test
 
 deploy_script:
-    - securefile -decrypt token.txt.enc -secret $DOCKER_HUB_PASSPHRASE_SECRET -salt $DOCKER_HUB_PASSPHRASE_SALT
+    - securefile -decrypt token.txt.enc -secret $DOCKER_HUB_TOKEN_SECRET -salt $DOCKER_HUB_TOKEN_SALT
     - cat token.txt | docker login --username=$DOCKER_HUB_ACCT --password-stdin
     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
