@@ -4,13 +4,17 @@ image: Ubuntu
 environment:
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
-    DOCKER_HUB_TOKEN:
-        secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
+    DOCKER_HUB_PASSPHRASE_SECRET:
+        secure: 6YdG6et+/fBK/Y9cFwbjDkkLgAeu2yZjpyFCpQ8eT40XQ3DAqk/ju0FHyRgBa1FB0yG+e9cUzN7yxgMMsA56KA==
+    DOCKER_HUB_PASSPHRASE_SALT:
+        secure: A3VcoM1m3EoQ6jzU/U3Bt9jXGJZ/pJra06qx82nI4fI/E9f7vYrt759i2TGK1l/FDdusG1PqsRoKljOHj8T2BQ==
     
 stack: node 12.16.3, docker
 
 install:
     - npm install
+    - ps: iex ((New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/appveyor/secure-file/master/install.ps1'))
+    - ps: set-alias securefile ".\appveyor-tools\secure-file.exe"
 
 build_script:
     - npm run build-prod
@@ -20,5 +24,6 @@ test_script:
     - npm run test
 
 deploy_script:
-    - docker login --username=$DOCKER_HUB_ACCT --password=$DOCKER_HUB_TOKEN
+    - securefile -decrypt token.txt.enc -secret $DOCKER_HUB_PASSPHRASE_SECRET -salt $DOCKER_HUB_PASSPHRASE_SALT
+    - cat token.txt | docker login --username=$DOCKER_HUB_ACCT --password-stdin
     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
