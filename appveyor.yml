@@ -30,7 +30,7 @@ test_script:
 
 artifacts:
     - path: '**/*.tar'
-    - name: 'image'
+      name: 'image'
 
 # deploy_script:
 #     - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
