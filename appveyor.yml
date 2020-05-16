@@ -21,7 +21,7 @@ install:
     - sudo apt-get install unzip
     - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
     - sudo unzip sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
-    - alias sonar-scanner="/opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner"
+    - alias sonar-scanner="sudo /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner"
 
 before_build:
     - sonar-scanner --help
@@ -31,7 +31,7 @@ build_script:
 
 test_script:
     - npm run test
-
+    
 artifacts:
     - path: 'build'
       name: 'src'
@@ -60,7 +60,7 @@ deploy_script:
         docker build -t "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}" .
         sudo docker push "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}"
 
-on_finish:
+on_success:
     - ps: |
         $wc = New-Object 'System.Net.WebClient'
         $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ./test_results/jest-junit.xml))
