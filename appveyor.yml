@@ -28,7 +28,7 @@ artifacts:
     - path: 'coverage'
       name: 'test coverage'
 
-    - path: 'junit.xml'
+    - path: 'jest-junit.xml'
       name: 'test results'
 
 deploy_script:
@@ -52,4 +52,4 @@ deploy_script:
 on_finish:
     - ps: |
         $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit.xml))
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\jest-junit.xml))
