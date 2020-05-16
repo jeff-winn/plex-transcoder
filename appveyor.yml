@@ -19,6 +19,7 @@ stack: node $NODEJS_VERSION, docker
 
 install:
     - npm install
+    - npm install -g sonarqube-scanner
     # - sudo apt-get install unzip
     # - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
     # - sudo unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
