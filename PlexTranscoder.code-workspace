@@ -7,8 +7,8 @@
 	"settings": {
 		"files.exclude": {
 			"build": true,
-			"coverage": true,
 			"node_modules": true,
+			"test_results": true,
 			"**/.git": true,
 			"**/.svn": true,
 			"**/.hg": true,
