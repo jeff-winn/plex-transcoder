@@ -5,7 +5,7 @@ pull_requests:
     do_not_increment_build_number: true
         
 environment:
-    NODEJS_VERSION: 12.6.3
+    NODEJS_VERSION: 12.16.3
     SONARCLOUD_AUTH_TOKEN:
         secure: WSZCNtuf3h9M4BxNiFQ7SQPwGkg3+LqSMZRyfYruiicYvc1BzYaN90n8pNEsPAKs
     DOCKER_HUB_ACCT: jeffwinn
