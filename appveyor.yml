@@ -23,14 +23,16 @@ install:
 build_script:
     - npm run build-prod
     - docker build -t $DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
-    - docker save $DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION --output $DOCKER_HUB_REPO.$APPVEYOR_BUILD_VERSION.tar
 
 test_script:
     - npm run test
 
 artifacts:
-    - path: '**/*.tar'
-      name: 'image'
+    - path: 'build'
+      name: 'app'
+      
+    - path: 'coverage'
+      name: 'test results'
 
 # deploy_script:
 #     - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
