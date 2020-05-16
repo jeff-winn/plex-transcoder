@@ -16,10 +16,10 @@ stack: node 12.16.3, docker
 
 install:
     - npm install
-    - apt-get install unzip
+    - sudo apt-get install unzip
     - ps: |
         # See: https://sonarcloud.io/documentation/analysis/scan/sonarscanner/ for the versions
-        
+
         sudo mkdir /opt/sonar-scanner
         cd /opt/sonar-scanner
         sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip
