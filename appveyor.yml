@@ -28,6 +28,9 @@ artifacts:
     - path: 'coverage'
       name: 'test coverage'
 
+    - path: 'junit.xml'
+      name: 'test results'
+
 deploy_script:
     - ps: |
         $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' -or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
