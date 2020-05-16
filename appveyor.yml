@@ -20,13 +20,9 @@ stack: node $NODEJS_VERSION, docker
 install:
     - npm install
     - npm install -g sonarqube-scanner
-    # - sudo apt-get install unzip
-    # - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
-    # - sudo unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
-    # - sudo ln -s /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner /usr/local/bin
 
 before_build:
-    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN"
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH"
 
 build_script:
     - npm run build-prod
