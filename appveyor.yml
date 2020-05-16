@@ -4,10 +4,10 @@ image: Ubuntu
 pull_requests:
     do_not_increment_build_number: true
 
-branches:
-    only:
-        - master
-        - develop
+# branches:
+#     only:
+#         - master
+#         - develop
         
 environment:
     DOCKER_HUB_ACCT: jeffwinn
@@ -22,13 +22,16 @@ install:
 
 build_script:
     - npm run build-prod
+    - docker build -t $DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
+    - docker save $DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION --output $DOCKER_HUB_REPO.$APPVEYOR_BUILD_VERSION.tar
 
 test_script:
     - npm run test
 
-before_deploy:
-    - docker build -t $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION .
+artifacts:
+    - path: '**/*.tar'
+    - name: 'image'
 
-deploy_script:
-    - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
-    - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
+# deploy_script:
+#     - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
+#     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
