@@ -22,12 +22,12 @@ install:
 
         sudo mkdir /opt/sonar-scanner
         sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip
-        sudo unzip -q sonar-scanner-cli-4.1.0.1829-linux.zip -d /opt/sonar-scanner
+        sudo unzip -v sonar-scanner-cli-4.1.0.1829-linux.zip -d /opt/sonar-scanner
         sudo alias sonar-scanner="/opt/sonar-scanner/bin/sonar-scanner"
 
 before_build:
     - sonar-scanner --help
-    
+
 build_script:
     - npm run build-prod
 
