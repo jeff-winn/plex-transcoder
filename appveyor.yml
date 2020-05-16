@@ -21,9 +21,8 @@ install:
         # See: https://sonarcloud.io/documentation/analysis/scan/sonarscanner/ for the versions
 
         sudo mkdir /opt/sonar-scanner
-        cd /opt/sonar-scanner
         sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip
-        sudo unzip sonar-scanner-cli-4.1.0.1829-linux.zip
+        sudo unzip -q sonar-scanner-cli-4.1.0.1829-linux.zip -d /opt/sonar-scanner
 
 build_script:
     - npm run build-prod
