@@ -1,4 +1,4 @@
-version: 1.0.0-ci-{build}
+version: 0.0.0-ci-{build}
 image: Ubuntu
 
 pull_requests:
@@ -38,10 +38,10 @@ deploy_script:
         docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_ENCRYPTED_TOKEN"        
         
         $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
-        # if ($env:APPVEYOR_REPO_BRANCH -eq 'develop') {
-            # Remove the CI build tag from the release builds.
+        if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+            # Remove the CI build tag from the production release builds.
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
-        # }
+        }
         
         docker build -t "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}" .
-        # sudo docker push "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}"
+        sudo docker push "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}"
