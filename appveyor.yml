@@ -31,7 +31,7 @@ artifacts:
 
 deploy_script:
     - ps: |
-        $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
+        $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' -or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
         if (-not $deploy) {
             return
         }
