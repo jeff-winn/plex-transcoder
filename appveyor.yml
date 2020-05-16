@@ -5,6 +5,7 @@ pull_requests:
     do_not_increment_build_number: true
         
 environment:
+    NODEJS_VERSION: 12.6.3
     SONARCLOUD_AUTH_TOKEN:
         secure: WSZCNtuf3h9M4BxNiFQ7SQPwGkg3+LqSMZRyfYruiicYvc1BzYaN90n8pNEsPAKs
     DOCKER_HUB_ACCT: jeffwinn
@@ -12,11 +13,12 @@ environment:
     DOCKER_HUB_AUTH_TOKEN:
         secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
     
-stack: node 12.16.3, docker
+stack: node $NODEJS_VERSION, docker
 
 # See: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/ for the versions of the Sonar Scanner CLI that are available.
 
 install:
+    - ps: Install-Product node $NODEJS_VERSION
     - npm install
     - sudo apt-get install unzip
     - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
