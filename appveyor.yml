@@ -20,9 +20,8 @@ install:
     - npm install
     - sudo apt-get install unzip
     - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
-    - sudo unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
+    - sudo unzip sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
     - PATH="/opt/sonar-scanner-4.3.0.2102-linux/bin:$PATH"
-    - echo $PATH
 
 before_build:
     - sudo sonar-scanner --help
