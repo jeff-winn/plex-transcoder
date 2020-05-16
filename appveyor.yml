@@ -3,16 +3,11 @@ image: Ubuntu
 
 pull_requests:
     do_not_increment_build_number: true
-
-# branches:
-#     only:
-#         - master
-#         - develop
         
 environment:
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
-    DOCKER_HUB_TOKEN:
+    DOCKER_HUB_ENCRYPTED_TOKEN:
         secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
     
 stack: node 12.16.3, docker
@@ -34,6 +29,18 @@ artifacts:
     - path: 'coverage'
       name: 'test coverage'
 
-# deploy_script:
-#     - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
-#     - sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$APPVEYOR_BUILD_VERSION
+deploy_script:
+    - ps: |
+        $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
+        if (-not $deploy) {
+            return
+        }
+
+        docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_ENCRYPTED_TOKEN"
+        
+        $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
+        if ($env:APPVEYOR_REPO_BRANCH -eq 'develop') {
+            $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
+        }
+        
+        sudo docker push $DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$IMAGE_TAG
