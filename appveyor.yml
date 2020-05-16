@@ -30,10 +30,10 @@ artifacts:
 
 deploy_script:
     - ps: |
-        $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' -or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
-        if (-not $deploy) {
-            return
-        }
+        # $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' -or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
+        # if (-not $deploy) {
+        #     return
+        # }
 
         docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_ENCRYPTED_TOKEN"        
         
