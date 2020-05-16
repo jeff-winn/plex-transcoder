@@ -14,15 +14,14 @@ environment:
     
 stack: node 12.16.3, docker
 
+# See: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/ for the versions of the Sonar Scanner CLI that are available.
+
 install:
     - npm install
     - sudo apt-get install unzip
-    - ps: |
-        # See: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/ for the versions
-
-        sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
-        sudo unzip sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
-        alias sonar-scanner="sudo /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner"
+    - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
+    - sudo unzip sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
+    - alias sonar-scanner="/opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner"
 
 before_build:
     - sonar-scanner --help
