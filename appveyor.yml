@@ -42,5 +42,5 @@ deploy_script:
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
         
-        docker build -t "$DOCKER_HUB_REPO:$IMAGE_TAG" .
-        sudo docker push "$DOCKER_HUB_ACCT/$DOCKER_HUB_REPO:$IMAGE_TAG"
+        docker build -t "${env:DOCKER_HUB_REPO}:${IMAGE_TAG}" .
+        sudo docker push "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}"
