@@ -19,13 +19,13 @@ stack: node $NODEJS_VERSION, docker
 
 install:
     - npm install
-    - sudo apt-get install unzip
-    - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
-    - sudo unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
-    - sudo ln -s /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner /usr/local/bin
+    # - sudo apt-get install unzip
+    # - sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.3.0.2102-linux.zip
+    # - sudo unzip -q sonar-scanner-cli-4.3.0.2102-linux.zip -d /opt
+    # - sudo ln -s /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner /usr/local/bin
 
 before_build:
-    - sudo sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN"
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN"
 
 build_script:
     - npm run build-prod
