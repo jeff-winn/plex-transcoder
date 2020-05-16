@@ -22,7 +22,7 @@ install:
 
         sudo mkdir /opt/sonar-scanner
         sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip
-        sudo unzip -v sonar-scanner-cli-4.1.0.1829-linux.zip -d /opt/sonar-scanner
+        sudo unzip sonar-scanner-cli-4.1.0.1829-linux.zip -d /opt/sonar-scanner
         sudo ls /opt/sonar-scanner -al
 
 before_build:
