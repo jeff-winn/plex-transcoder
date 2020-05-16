@@ -29,10 +29,10 @@ test_script:
 
 artifacts:
     - path: 'build'
-      name: 'app'
-      
+      name: 'src'
+
     - path: 'coverage'
-      name: 'test results'
+      name: 'test coverage'
 
 # deploy_script:
 #     - docker login --username="$DOCKER_HUB_ACCT" --password="$DOCKER_HUB_TOKEN"
