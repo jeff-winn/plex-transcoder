@@ -5,15 +5,23 @@ pull_requests:
     do_not_increment_build_number: true
         
 environment:
+    SONARCLOUD_AUTH_TOKEN:
+        secure: WSZCNtuf3h9M4BxNiFQ7SQPwGkg3+LqSMZRyfYruiicYvc1BzYaN90n8pNEsPAKs
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
-    DOCKER_HUB_ENCRYPTED_TOKEN:
+    DOCKER_HUB_AUTH_TOKEN:
         secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
     
 stack: node 12.16.3, docker
 
 install:
     - npm install
+    - apt-get install unzip
+    - ps: |
+        sudo mkdir /opt/sonar-scanner
+        cd /opt/sonar-scanner
+        sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.1.0.1829-linux.zip
+        sudo unzip sonar-scanner-cli-4.1.0.1829-linux.zip
 
 build_script:
     - npm run build-prod
@@ -38,7 +46,7 @@ deploy_script:
             return
         }
 
-        docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_ENCRYPTED_TOKEN"        
+        docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_AUTH_TOKEN"        
         
         $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
         if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
