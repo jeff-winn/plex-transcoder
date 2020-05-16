@@ -24,7 +24,7 @@ install:
     - sudo ln -s /opt/sonar-scanner-4.3.0.2102-linux/bin/sonar-scanner /usr/local/bin
 
 before_build:
-    - sudo sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dproject.settings="sonarcloud.properties"
+    - sudo sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN"
 
 build_script:
     - npm run build-prod
