@@ -22,10 +22,10 @@ init:
             # Remove the CI build tag from the production release builds.
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
-        
+
     - ps: |
         $SONAR_BRANCH_NAME = $env:APPVEYOR_REPO_BRANCH
-        if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -neq '') {
+        if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -ne '') {
             $SONAR_BRANCH_NAME = $env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
         }
 
