@@ -18,12 +18,12 @@ install:
     
 build_script:
     - npm run build-prod
-    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH"
 
 test_script:
     - npm run test
 
 after_test:
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH"
     
 artifacts:
     - path: 'build'
