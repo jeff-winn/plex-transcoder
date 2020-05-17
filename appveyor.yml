@@ -15,8 +15,6 @@ environment:
     
 stack: node $NODEJS_VERSION, docker
 
-# See: https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/ for the versions of the Sonar Scanner CLI that are available.
-
 install:
     - npm install
     - npm install -g sonarqube-scanner
