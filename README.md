@@ -1,5 +1,5 @@
 # Plex Transcoder
-This project has taken inspiration from the UnicornTranscoder project.
+This project has taken inspiration from the [UnicornTranscoder](https://github.com/UnicornTranscoder/UnicornTranscoder) project.
 
 | Branch | Build Status | Quality Gate | Coverage |
 | ------ | ------------ | ------------ | -------- |
