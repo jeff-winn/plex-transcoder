@@ -23,14 +23,16 @@ init:
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
 
-    - echo $APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
-    - echo $APPVEYOR_REPO_BRANCH
-    
     - ps: |
         $SONAR_BRANCH_NAME = $env:APPVEYOR_REPO_BRANCH
         if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -ne '') {
             $SONAR_BRANCH_NAME = $env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
         }
+    
+    - echo $APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
+    - echo $APPVEYOR_REPO_BRANCH
+    - echo $IMAGE_TAG
+    - echo $SONAR_BRANCH_NAME
 
 install:
     - npm install
@@ -41,9 +43,7 @@ build_script:
 
 test_script:
     - npm run test
-
-after_test:
-    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$SONAR_BRANCH_NAME" -Dsonar.projectVersion="$IMAGE_TAG"
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$SONAR_BRANCH_NAME"
     
 artifacts:
     - path: 'build'
