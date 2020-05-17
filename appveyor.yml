@@ -18,32 +18,15 @@ stack: node $NODEJS_VERSION, docker
 install:
     - npm install
     - npm install -g sonarqube-scanner
-
-before_build:
-    - ps: |
-        $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
-        if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
-            # Remove the CI build tag from the production release builds.
-            $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
-        }
-
-    - ps: |
-        $SONAR_BRANCH_NAME = $env:APPVEYOR_REPO_BRANCH
-        if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -ne '') {
-            $SONAR_BRANCH_NAME = $env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
-        }
-    
-    - echo $APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
-    - echo $APPVEYOR_REPO_BRANCH
-    - echo $IMAGE_TAG
-    - echo $SONAR_BRANCH_NAME
     
 build_script:
     - npm run build-prod
 
 test_script:
     - npm run test
-    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$SONAR_BRANCH_NAME" -Dsonar.projectVersion="$IMAGE_TAG"
+
+after_test:
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH" -Dsonar.projectVersion="$APPVEYOR_BUILD_VERSION"
     
 artifacts:
     - path: 'build'
@@ -60,6 +43,12 @@ deploy_script:
         $deploy = ($env:APPVEYOR_REPO_BRANCH -eq 'master' -or $env:APPVEYOR_REPO_BRANCH -eq 'develop')
         if (-not $deploy) {
             return
+        }
+
+        $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
+        if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+            # Remove the CI build tag from the production release builds.
+            $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
 
         docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_AUTH_TOKEN"        
