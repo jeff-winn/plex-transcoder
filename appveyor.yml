@@ -23,6 +23,9 @@ init:
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
 
+    - echo $APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
+    - echo $APPVEYOR_REPO_BRANCH
+    
     - ps: |
         $SONAR_BRANCH_NAME = $env:APPVEYOR_REPO_BRANCH
         if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -ne '') {
