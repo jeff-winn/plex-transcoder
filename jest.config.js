@@ -24,7 +24,7 @@ module.exports = {
     // collectCoverageFrom: null,
   
     // The directory where Jest should output its coverage files
-    // coverageDirectory: null,
+    coverageDirectory: 'test_results/coverage',
   
     // An array of regexp pattern strings used to skip coverage collection
     // coveragePathIgnorePatterns: [
@@ -100,7 +100,7 @@ module.exports = {
         suiteNameTemplate: '{filename}',
         classNameTemplate: '{classname}',
         titleTemplate: '{title}',
-        outputName: 'jest-junit.xml'
+        outputName: 'test_results/jest-junit.xml'
       }]
     ],
   

@@ -1,34 +1,38 @@
 version: 0.0.0-ci-{build}
 image: Ubuntu
-
-pull_requests:
-    do_not_increment_build_number: true
         
 environment:
+    NODEJS_VERSION: 12.16.3
+    SONARCLOUD_AUTH_TOKEN:
+        secure: WSZCNtuf3h9M4BxNiFQ7SQPwGkg3+LqSMZRyfYruiicYvc1BzYaN90n8pNEsPAKs
     DOCKER_HUB_ACCT: jeffwinn
     DOCKER_HUB_REPO: plex-transcoder
-    DOCKER_HUB_ENCRYPTED_TOKEN:
+    DOCKER_HUB_AUTH_TOKEN:
         secure: Va78zuCPdE+yXdoAAcIhmF1nSP1IINHadv1boECCVAE82rzOQci8pN+sZrv+FYZz
     
-stack: node 12.16.3, docker
+stack: node $NODEJS_VERSION, docker
 
 install:
     - npm install
-
+    - npm install -g sonarqube-scanner
+    
 build_script:
     - npm run build-prod
 
 test_script:
     - npm run test
 
+after_test:
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH"
+    
 artifacts:
     - path: 'build'
       name: 'src'
 
-    - path: 'coverage'
+    - path: 'test_results/coverage'
       name: 'test coverage'
 
-    - path: 'jest-junit.xml'
+    - path: 'test_results/jest-junit.xml'
       name: 'test results'
 
 deploy_script:
@@ -38,18 +42,18 @@ deploy_script:
             return
         }
 
-        docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_ENCRYPTED_TOKEN"        
-        
         $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION
         if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
             # Remove the CI build tag from the production release builds.
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
-        
+
+        docker login --username="$env:DOCKER_HUB_ACCT" --password="$env:DOCKER_HUB_AUTH_TOKEN"        
+                
         docker build -t "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}" .
         sudo docker push "${env:DOCKER_HUB_ACCT}/${env:DOCKER_HUB_REPO}:${IMAGE_TAG}"
 
-on_finish:
+on_success:
     - ps: |
         $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\jest-junit.xml))
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path ./test_results/jest-junit.xml))
