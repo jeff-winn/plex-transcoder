@@ -23,6 +23,12 @@ init:
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
         }
         
+    - ps: |
+        $SONAR_BRANCH_NAME = $env:APPVEYOR_REPO_BRANCH
+        if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -neq '') {
+            $SONAR_BRANCH_NAME = $env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH
+        }
+
 install:
     - npm install
     - npm install -g sonarqube-scanner
@@ -34,7 +40,7 @@ test_script:
     - npm run test
 
 after_test:
-    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH" -Dsonar.projectVersion="$IMAGE_TAG"
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$SONAR_BRANCH_NAME" -Dsonar.projectVersion="$IMAGE_TAG"
     
 artifacts:
     - path: 'build'
