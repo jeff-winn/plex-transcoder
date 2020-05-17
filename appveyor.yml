@@ -25,9 +25,8 @@ before_build:
         if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
             # Remove the CI build tag from the production release builds.
             $IMAGE_TAG = $env:APPVEYOR_BUILD_VERSION.substring(0, $env:APPVEYOR_BUILD_VERSION.indexof('-'))
-        }
-
-        sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH" -Dsonar.projectVersion="$IMAGE_TAG"
+        }        
+    - sonar-scanner -Dsonar.login="$SONARCLOUD_AUTH_TOKEN" -Dsonar.branch.name="$APPVEYOR_REPO_BRANCH" -Dsonar.projectVersion="$IMAGE_TAG"
 
 build_script:
     - npm run build-prod
