@@ -1,7 +1,7 @@
 FROM node:12.16.3
 
 WORKDIR /app
-EXPOSE 8080
+EXPOSE 34800
 
 COPY build/ ./bin
 
