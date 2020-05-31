@@ -2,7 +2,7 @@ import express from 'express';
 
 const app = express();
 
-app.get('/api/transcode', (req, res) => {
+app.post('/api/transcode', (req, res) => {
     return res.send('Ok!');
 });
 
