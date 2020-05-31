@@ -5,4 +5,4 @@ EXPOSE 34800/tcp
 
 COPY build/ ./bin
 
-CMD [ "node", "./bin/main.js" ]
+CMD [ "node", "./build/main.js" ]
