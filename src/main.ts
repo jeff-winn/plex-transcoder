@@ -7,6 +7,6 @@ app.post('/api/transcode', (req, res) => {
     return res.send('Ok!');
 });
 
-app.listen(8080, () => {
+app.listen(34800, () => {
     console.log('started');
 });

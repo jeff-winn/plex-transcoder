@@ -1,8 +1,8 @@
 FROM node:12.16.3
 
-WORKDIR /app
+WORKDIR /usr/lib/plex-transcoder
 EXPOSE 34800/tcp
 
-COPY build/ ./bin
+COPY build/ ./
 
-CMD [ "node", "./build/main.js" ]
+CMD [ "node", "main.js" ]
