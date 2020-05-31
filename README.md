@@ -16,3 +16,6 @@ This project has taken inspiration from the [UnicornTranscoder](https://github.c
 ### Docker Hub
 This project is being hosted on DockerHub!
 https://hub.docker.com/repository/docker/jeffwinn/plex-transcoder
+
+### Setup
+- Needs to have the same mount point as the Plex installation so the files can be located for transcoding.
