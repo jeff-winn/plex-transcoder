@@ -1,7 +1,3 @@
-function main(): void {
-    console.log("Started!");
-}
-
 import express from 'express';
 
 const app = express();
