@@ -7,6 +7,15 @@
 			"problemMatcher": [
 				"$tsc"
 			],
+			"presentation": {
+				"echo": true,
+				"reveal": "silent",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"revealProblems": "onProblem",
+				"clear": true
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
