@@ -3,9 +3,7 @@ import bodyParser from 'body-parser';
 import express from 'express';
 
 const app = express();
-app.use(bodyParser.text({
-    type: 'text/plain'
-}));
+app.use(bodyParser.json());
 
 app.post('/api/transcode', (req, res) => {
     return res.status(200)
