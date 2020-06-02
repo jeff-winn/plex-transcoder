@@ -1,10 +1,16 @@
 import 'reflect-metadata';
+import bodyParser from 'body-parser';
 import express from 'express';
 
 const app = express();
+app.use(bodyParser.text({
+    type: 'text/plain'
+}));
 
 app.post('/api/transcode', (req, res) => {
-    return res.send('Ok!');
+    return res.status(200)
+        .contentType('text/plain')
+        .send('Ok!');
 });
 
 app.get('/api/test', (req, res) => {
