@@ -1,4 +1,4 @@
-import { TranscodeRequestContext } from "../model/transcode-request-context";
+import { TranscodeRequestContext } from "./transcode-request-context";
 
 export class TranscodeService {
     public transcode(context: TranscodeRequestContext): Promise<void> {

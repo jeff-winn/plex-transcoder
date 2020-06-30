@@ -2,9 +2,9 @@ import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
-import { TranscodeService } from './transcoding/services/transcode-service';
-import { TranscodeRequestContext } from './transcoding/model/transcode-request-context';
-import { TranscodeRequest } from './transcoding/model/transcode-request';
+import { TranscodeService } from './transcoding/transcode-service';
+import { TranscodeRequestContext } from './transcoding/transcode-request-context';
+import { TranscodeRequest } from './transcoding/transcode-request';
 
 const app = express();
 
