@@ -2,8 +2,17 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "npm",
-			"script": "build",
+			"label": "docker-build",
+			"type": "docker-build",
+			"dockerBuild": {
+				"tag": "plextranscoder:latest",
+				"dockerfile": "${workspaceFolder}/Dockerfile"
+			},
+			"platform": "node",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": [
 				"$tsc"
 			],
@@ -15,11 +24,38 @@
 				"showReuseMessage": true,
 				"revealProblems": "onProblem",
 				"clear": true
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
 			}
+		},
+		{
+			"label": "docker-run: debug",
+			"type": "docker-run",
+			"dependsOn": "docker-build",
+			"dockerRun": {
+				"remove": true,
+				"env": {
+					"TRANSCODER_PORT": "34800"
+				},
+				"ports": [
+					{
+						"containerPort": 34800,
+						"hostPort": 34800,
+						"protocol": "tcp"
+					}
+				],
+				"volumes": [
+					{
+						"localPath": "${env:USERPROFILE}/videos",
+						"containerPath": "/data/movies"
+					},
+					{
+						"localPath": "${env:USERPROFILE}/.plex/transcode",
+						"containerPath": "/transcode"
+					}
+				]
+			},
+			"node": {
+				"enableDebugging": true
+			}			
 		}
 	]
 }

@@ -5,12 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
+            "name": "Launch",
+            "type": "docker",
             "request": "launch",
-            "name": "Debug",
-            "program": "${workspaceFolder}/build/main.js",
-            "preLaunchTask": "${defaultBuildTask}",
-            "console": "internalConsole",
-        }
+            "preLaunchTask": "docker-run: debug",
+            "platform": "node",
+            "dockerServerReadyAction": {
+              "pattern": "Application has started on port (\\d+)"
+            },
+            "node": {
+                "remoteRoot": "/usr/src/plex-transcoder",
+                "sourceMaps": true
+            }
+        }        
     ]
 }

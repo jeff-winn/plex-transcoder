@@ -11,10 +11,10 @@ app.post('/api/transcode', (req, res) => {
         .send('Ok!');
 });
 
-app.get('/api/test', (req, res) => {
-    return res.send('success');
+app.get('/api/health', (req, res) => {
+    return res.sendStatus(200);
 });
 
-app.listen(34800, () => {
+app.listen(process.env.TRANSCODER_PORT, () => {
     console.log('started');
 });
