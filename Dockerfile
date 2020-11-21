@@ -1,5 +1,7 @@
 FROM plexinc/pms-docker:latest
 
+EXPOSE 34800
+
 RUN apt-get install curl -y
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 RUN apt-get install nodejs -y
