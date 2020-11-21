@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import bodyParser from 'body-parser';
 import express from 'express';
+import { FfmpegCommand } from 'fluent-ffmpeg';
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,6 +16,6 @@ app.get('/api/health', (req, res) => {
     return res.sendStatus(200);
 });
 
-app.listen(34800, () => {
+app.listen(process.env.TRANSCODER_PORT, () => {
     console.log('started');
 });

@@ -1,12 +1,14 @@
-FROM node:12.16.3
+FROM plexinc/pms-docker:latest
 
-WORKDIR /usr/lib/plex-transcoder
+RUN apt-get install curl -y
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get install nodejs -y
+
+WORKDIR /usr/src/plex-transcoder
 
 COPY package*.json ./
-COPY build/ ./
+COPY tsconfig*.json ./
+COPY ./src src
 
 RUN npm install
-
-EXPOSE 34800/tcp
-
-CMD [ "node", "main.js" ]
+RUN npm run build
