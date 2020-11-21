@@ -14,11 +14,11 @@ RUN npm install
 RUN npm run build
 
 RUN mkdir ./bin
-RUN \
-# Copy the transcoder
-    cp -f /usr/lib/plexmediaserver/Plex\ Transcoder ./bin/Plex\ Transcoder
-
 RUN mkdir ./bin/lib
-RUN \
-# Copy the libraries
-    cp -R /usr/lib/plexmediaserver/lib ./bin
+
+# Transfer the stock transcoder, and clean up all the extra files.
+RUN cp -f /usr/lib/plexmediaserver/Plex\ Transcoder ./bin/Plex\ Transcoder
+RUN cp -R /usr/lib/plexmediaserver/lib ./bin
+RUN rm -r /etc/cont-init.d
+RUN rm -r /etc/services.d/plex
+RUN rm -r /usr/lib/plexmediaserver
