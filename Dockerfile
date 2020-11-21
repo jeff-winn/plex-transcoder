@@ -8,13 +8,6 @@ RUN apt-get install nodejs -y
 
 WORKDIR /usr/src/plex-transcoder
 
-COPY package*.json ./
-COPY tsconfig*.json ./
-COPY ./src src
-
-RUN npm install
-RUN npm run build
-
 RUN mkdir ./bin
 RUN mkdir ./bin/lib
 
@@ -24,3 +17,10 @@ RUN cp -R /usr/lib/plexmediaserver/lib ./bin
 RUN rm -r /etc/cont-init.d
 RUN rm -r /etc/services.d/plex
 RUN rm -r /usr/lib/plexmediaserver
+
+COPY package*.json ./
+COPY tsconfig*.json ./
+RUN npm install
+
+COPY ./src src
+RUN npm run build

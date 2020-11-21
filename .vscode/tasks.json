@@ -31,7 +31,6 @@
 			"type": "docker-run",
 			"dependsOn": "docker-build",
 			"dockerRun": {
-				"containerName": "plex-transcoder",
 				"remove": true,
 				"env": {
 					"TRANSCODER_PORT": "34800"
